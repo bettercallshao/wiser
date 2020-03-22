@@ -1,0 +1,9 @@
+version: '3'
+services:
+  wiser:
+    image: jetty
+    ports:
+    - "8080:8080"
+    - "8443:8443"
+    volumes:
+    - ./build/libs:/var/lib/jetty/webapps
