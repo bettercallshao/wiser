@@ -1,0 +1,20 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+    kubernetes.io/ingress.class: nginx
+  name: wiser
+  namespace: wiser
+spec:
+  rules:
+  - host: wiser.bettercallshao.com
+    http:
+      paths:
+      - backend:
+          serviceName: deluxe
+          servicePort: 80
+  tls:
+  - hosts:
+    - wiser.bettercallshao.com
+    secretName: letsencrypt-prod

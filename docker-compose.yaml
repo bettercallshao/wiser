@@ -1,6 +1,7 @@
 version: '3'
 services:
   deluxe:
+    image: bettercallshao/deluxe
     build:
       context: .
       dockerfile: df/Dockerfile.deluxe
@@ -14,6 +15,7 @@ services:
     links:
     - postgres
   manhattan:
+    image: bettercallshao/manhattan
     build:
       context: .
       dockerfile: df/Dockerfile.manhattan

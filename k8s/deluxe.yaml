@@ -1,0 +1,54 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: deluxe
+  labels:
+    app: deluxe
+spec:
+  ports:
+  - port: 80
+    targetPort: 8080
+  selector:
+    app: deluxe
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: deluxe
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: deluxe
+  template:
+    metadata:
+      labels:
+        app: deluxe
+    spec:
+      containers:
+      - name: deluxe
+        image: bettercallshao/deluxe:latest
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 8080
+        env:
+        - name: spring_profiles_active
+          valueFrom:
+            configMapKeyRef:
+              name: wiser-config
+              key: spring_profiles_active
+        - name: spring_datasource_url
+          valueFrom:
+            configMapKeyRef:
+              name: wiser-config
+              key: spring_datasource_url
+        - name: spring_datasource_username
+          valueFrom:
+            configMapKeyRef:
+              name: wiser-config
+              key: spring_datasource_username
+        - name: spring_datasource_password
+          valueFrom:
+            configMapKeyRef:
+              name: wiser-config
+              key: spring_datasource_password
