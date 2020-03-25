@@ -7,4 +7,4 @@ ADD spice ./spice
 RUN gradle :deluxe:build
 
 FROM jetty
-COPY --from=0 /app/deluxe/build/libs/*.war /var/lib/jetty/webapps
+COPY --from=0 /app/deluxe/build/libs/*.war /var/lib/jetty/webapps/root.war

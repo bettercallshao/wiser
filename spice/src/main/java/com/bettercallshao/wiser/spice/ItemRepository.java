@@ -1,7 +1,12 @@
 package com.bettercallshao.wiser.spice;
 
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.repository.PagingAndSortingRepository;
+import org.springframework.stereotype.Repository;
 
-public interface ItemRepository extends CrudRepository<Item, Integer> {
+import java.util.List;
 
+@Repository
+public interface ItemRepository extends PagingAndSortingRepository<Item, Integer> {
+    List<Item> findAllByOrderByTimestampDesc(Pageable pageable);
 }
