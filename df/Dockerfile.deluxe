@@ -1,0 +1,10 @@
+FROM gradle:6.2.2-jdk11
+
+WORKDIR /app
+ADD settings.gradle .
+ADD deluxe ./deluxe
+ADD spice ./spice
+RUN gradle :deluxe:build
+
+FROM jetty
+COPY --from=0 /app/deluxe/build/libs/*.war /var/lib/jetty/webapps

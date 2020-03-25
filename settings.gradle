@@ -1,1 +1,5 @@
 rootProject.name = 'wiser'
+
+include 'spice'
+include 'deluxe'
+include 'manhattan'

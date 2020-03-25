@@ -1,0 +1,9 @@
+FROM gradle:6.2.2-jdk11
+
+WORKDIR /app
+ADD settings.gradle .
+ADD manhattan ./manhattan
+ADD spice ./spice
+RUN gradle :manhattan:build
+
+CMD java -jar manhattan/build/libs/*.jar

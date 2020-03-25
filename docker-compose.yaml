@@ -1,9 +1,31 @@
 version: '3'
 services:
-  wiser:
-    image: jetty
+  deluxe:
+    build:
+      context: .
+      dockerfile: df/Dockerfile.deluxe
     ports:
     - "8080:8080"
-    - "8443:8443"
+    links:
+    - postgres
+  manhattan:
+    build:
+      context: .
+      dockerfile: df/Dockerfile.manhattan
+    environment:
+      spring_profiles_active: container
+      manhattan_url: https://www.technologyreview.com/topnews.rss
+      spring_datasource_url: jdbc:postgresql://postgres:5432/wiser
+      spring_datasource_username: postgres
+      spring_datasource_password: postgres
+    links:
+    - postgres
+  postgres:
+    image: postgres
+    ports:
+    - "5432:5432"
+    environment:
+      POSTGRES_PASSWORD: postgres
+      PGDATA: /postgres-data
     volumes:
-    - ./build/libs:/var/lib/jetty/webapps
+    - "./postgres-data:/postgres-data"
