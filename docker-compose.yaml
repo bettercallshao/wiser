@@ -34,5 +34,8 @@ services:
     environment:
       POSTGRES_PASSWORD: postgres
       PGDATA: /postgres-data
+      POSTGRES_DB: wiser
     volumes:
-    - "./postgres-data:/postgres-data"
+    - "postgres-data:/postgres-data"
+volumes:
+  postgres-data:
