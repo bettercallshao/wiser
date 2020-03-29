@@ -65,18 +65,22 @@ public class Manhattan {
         var feed = getFeed();
         if (feed != null) {
             for (var entry : feed.getEntries()) {
-                var timestamp = getTimestamp(entry.getPublishedDate());
-                if (timestamp.after(channel.timestamp)) {
-                    var item = new Item();
-                    item.title = entry.getTitle();
-                    item.description = entry.getDescription().getValue();
-                    item.link = entry.getLink();
-                    item.timestamp = timestamp;
-                    item.channel = channel;
-                    itemRepository.save(item);
-                    log.info("Added Item: {}", item);
-                } else {
-                    break;
+                try {
+                    var timestamp = getTimestamp(entry.getPublishedDate());
+                    if (timestamp.after(channel.timestamp)) {
+                        var item = new Item();
+                        item.title = entry.getTitle();
+                        item.description = entry.getDescription().getValue();
+                        item.link = entry.getLink();
+                        item.timestamp = timestamp;
+                        item.channel = channel;
+                        itemRepository.save(item);
+                        log.info("Added Item: {}", item);
+                    } else {
+                        break;
+                    }
+                } catch (Exception e) {
+                    log.error("Failed to add item: {}", e.getMessage());
                 }
             }
             channel.timestamp = getTimestamp(feed.getPublishedDate());
