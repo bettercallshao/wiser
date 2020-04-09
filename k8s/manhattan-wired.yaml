@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: manhattan-wired
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: manhattan-wired
+  template:
+    metadata:
+      labels:
+        app: manhattan-wired
+    spec:
+      containers:
+      - name: manhattan
+        image: bettercallshao/manhattan:latest
+        imagePullPolicy: Always
+        env:
+        - name: spring_profiles_active
+          valueFrom:
+            configMapKeyRef:
+              name: wiser-config
+              key: spring_profiles_active
+        - name: spring_datasource_url
+          valueFrom:
+            configMapKeyRef:
+              name: wiser-config
+              key: spring_datasource_url
+        - name: spring_datasource_username
+          valueFrom:
+            configMapKeyRef:
+              name: wiser-config
+              key: spring_datasource_username
+        - name: spring_datasource_password
+          valueFrom:
+            configMapKeyRef:
+              name: wiser-config
+              key: spring_datasource_password
+        - name: manhattan_url
+          valueFrom:
+            configMapKeyRef:
+              name: wiser-config
+              key: manhattan_wired_url
